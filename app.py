@@ -10,6 +10,7 @@ collection_temp = db.temp
 collection_gas = db.gas
 collection_lev = db.lev
 collection_illum = db.illum
+collection_bright = db.bright
 
 app = Flask(__name__)
 api = Api(app)
@@ -37,8 +38,11 @@ class set_data(Resource):
             collection_illum.insert({"illum":args['illum']})
         if args['lev']:
             collection_lev.insert({"lev":args['lev']})
-        if args['red'] and args['blue'] and args['green'] and args['bright']:
-            collection_rgb.insert({"red":args['red'],"green":args['green'],"blue":args['blue'],"bright":args['bright']})
+        if args['red'] and args['blue'] and args['green']:
+            collection_rgb.insert({"red":args['red'],"green":args['green'],"blue":args['blue']})
+        if args['bright']:
+            bright = float(args['bright'])/1000
+            collection_bright.insert({'bright':bright})
         print(args['humidity'],args['gas'],args['lev'])
 
 class rgb(Resource):
@@ -51,7 +55,7 @@ class rgb(Resource):
         args = parser.parse_args()
         print(args['red'])
     def get(self):
-        return {"red":collection_rgb.find()[collection_rgb.count()-1]['red'],"green":collection_rgb.find()[collection_rgb.count()-1]['green'],"blue":collection_rgb.find()[collection_rgb.count()-1]['blue'], "bright":collection_rgb.find()[collection_rgb.count()-1]['bright']}
+        return {"red":collection_rgb.find()[collection_rgb.count()-1]['red'],"green":collection_rgb.find()[collection_rgb.count()-1]['green'],"blue":collection_rgb.find()[collection_rgb.count()-1]['blue'],"bright":collection_bright.find()[collection_bright.count()-1]['bright']}
 
 class illum(Resource):
     def get(self):
