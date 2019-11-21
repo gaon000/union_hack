@@ -47,6 +47,22 @@ class set_data(Resource):
 
         return 1
 
+class graph_illum(Resource):
+    def get(self):
+        return {"illum_graph":[collection_illum.find()[collection_illum.count()-1]['illum'],collection_illum.find()[collection_illum.count()-2]['illum'],collection_illum.find()[collection_illum.count()-3]['illum'],collection_illum.find()[collection_illum.count()-4]['illum'],collection_illum.find()[collection_illum.count()-5]['illum'],collection_illum.find()[collection_illum.count()-6]['illum'],collection_illum.find()[collection_illum.count()-7]['illum'],collection_illum.find()[collection_illum.count()-8]['illum'],collection_illum.find()[collection_illum.count()-9]['illum'],collection_illum.find()[collection_illum.count()-10]['illum']]}
+
+class graph_humi(Resource):
+    def get(self):
+        return {"humi_graph":[collection_humi.find()[collection_humi.count()-1]['humidity'],collection_humi.find()[collection_humi.count()-2]['humidity'],collection_humi.find()[collection_humi.count()-3]['humidity'],collection_humi.find()[collection_humi.count()-4]['humidity'],collection_humi.find()[collection_humi.count()-5]['humidity'],collection_humi.find()[collection_humi.count()-6]['humidity'],collection_humi.find()[collection_humi.count()-7]['humidity'],collection_humi.find()[collection_humi.count()-8]['humidity'],collection_humi.find()[collection_humi.count()-9]['humidity'],collection_humi.find()[collection_humi.count()-10]['humidity']]}
+
+class graph_gas(Resource):
+    def get(self):
+        return "graph gas"
+
+class graph_temp(Resource):
+    def get(self):
+        return "graph temp"
+
 class rgb(Resource):
     def post(self):
         parser = reqparse.RequestParser()
@@ -100,6 +116,10 @@ api.add_resource(gas,'/gas')
 api.add_resource(lev,'/lev')
 api.add_resource(humidity,'/humidity')
 api.add_resource(get_data,'/get_data')
+api.add_resource(graph_illum,'/gpi')
+api.add_resource(graph_humi,'/gph')
+api.add_resource(graph_gas,'/gpg')
+api.add_resource(graph_temp,'/gpt')
 
 
 if __name__ == '__main__':
