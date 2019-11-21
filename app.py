@@ -45,6 +45,8 @@ class set_data(Resource):
             collection_bright.insert({'bright':bright})
         print(args['humidity'],args['gas'],args['lev'])
 
+        return 1
+
 class rgb(Resource):
     def post(self):
         parser = reqparse.RequestParser()
