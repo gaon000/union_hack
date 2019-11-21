@@ -57,11 +57,11 @@ class graph_humi(Resource):
 
 class graph_gas(Resource):
     def get(self):
-        return "graph gas"
+        return {"gas_graph":[collection_gas.find()[collection_gas.count()-1]['gas'],collection_gas.find()[collection_gas.count()-2]['gas'],collection_gas.count()[collection_gas.count()-3]['gas'],collection_gas.find()[collection_gas.count()-4]['gas'],collection_gas.find()[collection_gas.count()-5]['gas'],collection_gas.find()[collection_gas.count()-6]['gas'],collection_gas.find()[collection_gas.count()-7]['gas'],collection_gas.find()[collection_gas.count()-8]['gas'],collection_gas.find()[collection_gas.count()-9]['gas'],collection_gas.find()[collection_gas.count()-10]['gas']]}
 
 class graph_temp(Resource):
     def get(self):
-        return "graph temp"
+        return {"temp_graph":[collection_temp.find()[collection_temp.count()-1]['temp'],collection_temp.find()[collection_temp.count()-2]['temp'],collection_temp.count()[collection_temp.count()-3]['temp'],collection_temp.find()[collection_temp.count()-4]['temp'],collection_temp.find()[collection_temp.count()-5]['temp'],collection_temp.find()[collection_temp.count()-6]['temp'],collection_temp.find()[collection_temp.count()-7]['temp'],collection_temp.find()[collection_temp.count()-8]['temp'],collection_temp.find()[collection_temp.count()-9]['temp'],collection_temp.find()[collection_temp.count()-10]['temp']]}
 
 class rgb(Resource):
     def post(self):
