@@ -59,6 +59,10 @@ class rgb(Resource):
     def get(self):
         return {"red":collection_rgb.find()[collection_rgb.count()-1]['red'],"green":collection_rgb.find()[collection_rgb.count()-1]['green'],"blue":collection_rgb.find()[collection_rgb.count()-1]['blue'],"bright":collection_bright.find()[collection_bright.count()-1]['bright']}
 
+class get_data(Resource):
+    def get(self):
+        return {"illum":collection_illum.find()[collection_illum.count()-1]['illum'],"gas":collection_gas.find()[collection_gas.count()-1]['gas'],"temp":collection_temp.find()[collection_temp.count()-1]['temp'],"humidity":collection_humi.find()[collection_humi.count()-1]['humidity']}
+
 class illum(Resource):
     def get(self):
         return {"illum":collection_illum.find()[collection_illum.count()-1]['illum']}
@@ -95,7 +99,7 @@ api.add_resource(temp,'/temp')
 api.add_resource(gas,'/gas')
 api.add_resource(lev,'/lev')
 api.add_resource(humidity,'/humidity')
-
+api.add_resource(get_data,'/get_data')
 
 
 if __name__ == '__main__':
