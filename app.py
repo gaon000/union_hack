@@ -42,14 +42,13 @@ class set_data(Resource):
             collection_rgb.insert({"red":args['red'],"green":args['green'],"blue":args['blue']})
         if args['bright']:
             bright = float(args['bright'])/1000
-            collection_bright.insert({'bright':bright})
-        print(args['humidity'],args['gas'],args['lev'])
+            collection_illum.insert({'illum':bright})
+        print(args['lev'])
 
-        return 1
 
 class graph_illum(Resource):
     def get(self):
-        return {"illum_graph":[collection_illum.find()[collection_illum.count()-1]['illum'],collection_illum.find()[collection_illum.count()-2]['illum'],collection_illum.find()[collection_illum.count()-3]['illum'],collection_illum.find()[collection_illum.count()-4]['illum'],collection_illum.find()[collection_illum.count()-5]['illum'],collection_illum.find()[collection_illum.count()-6]['illum'],collection_illum.find()[collection_illum.count()-7]['illum'],collection_illum.find()[collection_illum.count()-8]['illum'],collection_illum.find()[collection_illum.count()-9]['illum'],collection_illum.find()[collection_illum.count()-10]['illum']]}
+        return {"illum_graph":[collection_illum.find()[collection_illum.count()-1]['illum']*100,collection_illum.find()[collection_illum.count()-2]['illum']*100,collection_illum.find()[collection_illum.count()-3]['illum']*100,collection_illum.find()[collection_illum.count()-4]['illum']*100,collection_illum.find()[collection_illum.count()-5]['illum']*100,collection_illum.find()[collection_illum.count()-6]['illum']*100,collection_illum.find()[collection_illum.count()-7]['illum']*100,collection_illum.find()[collection_illum.count()-8]['illum']*100,collection_illum.find()[collection_illum.count()-9]['illum']*100,collection_illum.find()[collection_illum.count()-10]['illum']*100]}
 
 class graph_humi(Resource):
     def get(self):
@@ -57,11 +56,13 @@ class graph_humi(Resource):
 
 class graph_gas(Resource):
     def get(self):
-        return {"gas_graph":[collection_gas.find()[collection_gas.count()-1]['gas'],collection_gas.find()[collection_gas.count()-2]['gas'],collection_gas.count()[collection_gas.count()-3]['gas'],collection_gas.find()[collection_gas.count()-4]['gas'],collection_gas.find()[collection_gas.count()-5]['gas'],collection_gas.find()[collection_gas.count()-6]['gas'],collection_gas.find()[collection_gas.count()-7]['gas'],collection_gas.find()[collection_gas.count()-8]['gas'],collection_gas.find()[collection_gas.count()-9]['gas'],collection_gas.find()[collection_gas.count()-10]['gas']]}
+        return {"gas_graph":[collection_gas.find()[collection_gas.count()-1]['gas'],collection_gas.find()[collection_gas.count()-2]['gas'],collection_gas.find()[collection_gas.count()-3]['gas'],collection_gas.find()[collection_gas.count()-4]['gas'],collection_gas.find()[collection_gas.count()-5]['gas'],collection_gas.find()[collection_gas.count()-6]['gas'],collection_gas.find()[collection_gas.count()-7]['gas'],collection_gas.find()[collection_gas.count()-8]['gas'],collection_gas.find()[collection_gas.count()-9]['gas'],collection_gas.find()[collection_gas.count()-10]['gas']]}
 
 class graph_temp(Resource):
     def get(self):
-        return {"temp_graph":[collection_temp.find()[collection_temp.count()-1]['temp'],collection_temp.find()[collection_temp.count()-2]['temp'],collection_temp.count()[collection_temp.count()-3]['temp'],collection_temp.find()[collection_temp.count()-4]['temp'],collection_temp.find()[collection_temp.count()-5]['temp'],collection_temp.find()[collection_temp.count()-6]['temp'],collection_temp.find()[collection_temp.count()-7]['temp'],collection_temp.find()[collection_temp.count()-8]['temp'],collection_temp.find()[collection_temp.count()-9]['temp'],collection_temp.find()[collection_temp.count()-10]['temp']]}
+        
+        # return {"temp":collection_temp.find()[collection_temp.count()-1]['temp']}
+        return {"temp_graph":[collection_temp.find()[collection_temp.count()-1]['temp'],collection_temp.find()[collection_temp.count()-2]['temp'],collection_temp.find()[collection_temp.count()-3]['temp'],collection_temp.find()[collection_temp.count()-4]['temp'],collection_temp.find()[collection_temp.count()-5]['temp'],collection_temp.find()[collection_temp.count()-6]['temp'],collection_temp.find()[collection_temp.count()-7]['temp'],collection_temp.find()[collection_temp.count()-8]['temp'],collection_temp.find()[collection_temp.count()-9]['temp'],collection_temp.find()[collection_temp.count()-10]['temp']]}
 
 class rgb(Resource):
     def post(self):
@@ -73,7 +74,11 @@ class rgb(Resource):
         args = parser.parse_args()
         print(args['red'])
     def get(self):
-        return {"red":collection_rgb.find()[collection_rgb.count()-1]['red'],"green":collection_rgb.find()[collection_rgb.count()-1]['green'],"blue":collection_rgb.find()[collection_rgb.count()-1]['blue'],"bright":collection_bright.find()[collection_bright.count()-1]['bright']}
+        return {"red":collection_rgb.find()[collection_rgb.count()-1]['red'],"green":collection_rgb.find()[collection_rgb.count()-1]['green'],"blue":collection_rgb.find()[collection_rgb.count()-1]['blue'],"illum":1-collection_illum.find()[collection_illum.count()-1]['illum']}
+
+class bright(Resource):
+    def get(self):
+        return {"bright":collection_bright.find()[collection_bright.count()-1]['bright']}
 
 class get_data(Resource):
     def get(self):
@@ -120,7 +125,7 @@ api.add_resource(graph_illum,'/gpi')
 api.add_resource(graph_humi,'/gph')
 api.add_resource(graph_gas,'/gpg')
 api.add_resource(graph_temp,'/gpt')
-
+api.add_resource(bright,'/bright')
 
 if __name__ == '__main__':
 	app.run(debug=True)
